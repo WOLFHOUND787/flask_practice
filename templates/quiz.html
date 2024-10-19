@@ -1,0 +1,51 @@
+{% extends "main.html" %}
+{% block content %}        
+<div class="quiz-container">
+    <h1>Пройдите тест!</h1>
+    <form action="/quiz" method="POST">
+        <div class="quiz-question">
+            <p>1. Какой цвет не является основным?</p>
+            <label><input type="radio" name="q1" value="correct"> Фиолетовый</label>
+            <label><input type="radio" name="q1" value="wrong"> Зеленый</label>
+        </div>
+        
+        <div class="quiz-question">
+            <p>2. Столица Франции?</p>
+            <label><input type="radio" name="q2" value="correct"> Париж</label>
+            <label><input type="radio" name="q2" value="wrong"> Лондон</label>
+        </div>
+        
+        <div class="quiz-question">
+            <p>3. Сколько ног у паука?</p>
+            <label><input type="radio" name="q3" value="correct"> 8</label>
+            <label><input type="radio" name="q3" value="wrong"> 6</label>
+        </div>
+        
+        <div class="quiz-question">
+            <p>4. Сколько континентов на Земле?</p>
+            <label><input type="radio" name="q4" value="correct"> 7</label>
+            <label><input type="radio" name="q4" value="wrong"> 5</label>
+        </div>
+        
+        <div class="quiz-question">
+            <p>5. Какая планета ближе всего к Солнцу?</p>
+            <label><input type="radio" name="q5" value="correct"> Меркурий</label>
+            <label><input type="radio" name="q5" value="wrong"> Венера</label>
+        </div>
+        
+        <div class="quiz-question">
+            <p>6. В каком году произошла Великая Отечественная война?</p>
+            <label><input type="radio" name="q6" value="correct"> 1941</label>
+            <label><input type="radio" name="q6" value="wrong"> 1939</label>
+        </div>
+        
+        <div class="quiz-question">
+            <p>7. Самая высокая гора в мире?</p>
+            <label><input type="radio" name="q7" value="correct"> Эверест</label>
+            <label><input type="radio" name="q7" value="wrong"> Килиманджаро</label>
+        </div>
+        
+        <button type="submit" class="quiz-button">Отправить ответы</button>
+    </form>
+</div>
+{% endblock %}

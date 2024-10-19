@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Flask Project</title>
+</head>
+<body>
+<header>
+    <h1 class="h1_main">Добро пожаловать на сайт!</h1>
+    <nav>
+        <a href="/">Главная</a>
+        <a href="/news">Новости</a>
+        <a href="/about_us">О нас</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+        <a href="/array_operations">Операции с массивом</a>
+        <a href="/quiz">Пройти тест</a>
+    </nav>
+</header>
+<div class="content">
+    {% block content %}
+        <h1 class="h1_main">Главная страница</h1>
+    {% endblock %}
+</div>
+<footer>
+    <p class="p_main">© 2024 Flask Project</p>
+</footer>
+</body>
+</html>

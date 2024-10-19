@@ -1,0 +1,80 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="content">
+    <h2>Добавление элементов в массив</h2>
+    <form id="arrayForm">
+        <label for="element">Введите элемент:</label>
+        <input type="text" id="element" name="element" required>
+        <button type="button" onclick="addElement()">Добавить элемент</button>
+    </form>
+    
+    <h2>Операции с массивом</h2>
+    <button type="button" onclick="performOperation(1)">Добавить элемент с помощью push</button>
+    <button type="button" onclick="performOperation(2)">Удалить элемент с помощью pop</button>
+    <button type="button" onclick="performOperation(3)">Вставить элемент по индексу</button>
+    <button type="button" onclick="finishOperations()">Завершить</button>
+
+    <h3>Изначальный массив:</h3>
+    <pre id="initialArray"></pre>
+    
+    <h3>Конечный массив:</h3>
+    <pre id="finalArray"></pre>
+</div>
+
+<script>
+    let array = [];
+    let initialArray = [];
+
+    function addElement() {
+        const element = document.getElementById('element').value;
+        if (element) {
+            array.push(element);
+            initialArray.push(element);
+            document.getElementById('element').value = '';
+            document.getElementById('initialArray').innerText = JSON.stringify(initialArray, null, 2);
+        }
+    }
+
+    function performOperation(option) {
+        switch (option) {
+            case 1:
+                const newElement = prompt("Введите элемент для добавления:");
+                if (newElement) {
+                    array.push(newElement);
+                    alert("Элемент добавлен: " + newElement);
+                }
+                break;
+            case 2:
+                if (array.length > 0) {
+                    const removedElement = array.pop();
+                    alert("Элемент удален: " + removedElement);
+                } else {
+                    alert("Массив пустой.");
+                }
+                break;
+            case 3:
+                const index = parseInt(prompt("Введите индекс:"));
+                const elementToInsert = prompt("Введите элемент для вставки:");
+                if (index >= 0 && index <= array.length && elementToInsert) {
+                    array.splice(index, 0, elementToInsert);
+                    alert(`Элемент ${elementToInsert} вставлен по индексу ${index}.`);
+                } else {
+                    alert("Неверный индекс или элемент.");
+                }
+                break;
+            default:
+                alert("Неизвестная операция.");
+        }
+        document.getElementById('finalArray').innerText = JSON.stringify(array, null, 2);
+    }
+
+    function finishOperations() {
+    alert("Операции завершены.");
+    console.log({
+        initial: initialArray,
+        final: array
+    });
+    window.location.href = '/';
+    }
+</script>
+{% endblock %}

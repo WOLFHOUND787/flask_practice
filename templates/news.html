@@ -1,0 +1,15 @@
+{% extends "main.html" %}
+
+{% block content %}
+<h1 class="h1_main">Новости</h1>
+<ul>
+    {% for news in news_list %}
+        <li>
+            <h2 class="h2_main">{{ news.title }}</h2>
+            <p class="p_main">{{ news.content }}</p>
+        </li>
+    {% else %}
+        <p class="p_main">Пока новостей нет.</p>
+    {% endfor %}
+</ul>
+{% endblock %}

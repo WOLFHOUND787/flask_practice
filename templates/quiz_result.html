@@ -1,0 +1,11 @@
+{% extends "main.html" %}
+{% block content %} 
+<div class="quiz-container">
+    <div class="quiz-result">
+        <h1>Ваш результат:</h1>
+        <p>Вы набрали {{ score }} баллов.</p>
+        <p>{{ result }}</p>
+        <a href="/quiz">Пройти тест заново</a>
+    </div>
+</div>
+{% endblock %}

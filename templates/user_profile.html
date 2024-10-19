@@ -1,0 +1,8 @@
+{% extends "main.html" %}
+
+{% block content %}
+<h1 class="h1_main">Профиль пользователя</h1>
+<p class="p_main">Имя пользователя: {{ user.username }}</p>
+<p class="p_main">Email: {{ user.email }}</p>
+<a href="{{ url_for('edit_user', user_id=user.id) }}">Редактировать</a>
+{% endblock %}
