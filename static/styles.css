@@ -367,3 +367,194 @@ button[type="button"]:hover {
         text-align: center;
     }
 }
+
+
+/* Основные стили страницы */
+.js-tasks-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для Task 1 */
+#text-element, #changeable-paragraph {
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+#changeable-paragraph:hover {
+    background-color: #f0f0f0;
+}
+
+/* Стили для Task 2 */
+#class-demo {
+    padding: 15px;
+    margin: 15px 0;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+#class-demo.active {
+    background-color: #007bff;
+    color: white;
+}
+
+#class-list {
+    color: #666;
+    font-style: italic;
+}
+
+/* Стили для Task 3 - вкладки */
+.tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border-radius: 4px 4px 0 0;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.tab:hover {
+    background-color: #e0e0e0;
+}
+
+.tab.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.tab-content {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 0 4px 4px 4px;
+    margin-top: -1px;
+}
+
+/* Стили для Task 4 - таблица */
+#table-container {
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+table {
+    margin: 0 auto;
+}
+
+td {
+    transition: background-color 0.3s ease;
+}
+
+td:hover {
+    background-color: #f0f0f0;
+}
+
+#colored-cells-count {
+    color: #666;
+    font-style: italic;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Стили для Task 5 - темная тема */
+body.dark-theme {
+    background-color: #222;
+    color: #fff;
+}
+
+.dark-theme .js-tasks-container {
+    background-color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .tab {
+    background-color: #444;
+    border-color: #555;
+    color: #fff;
+}
+
+.dark-theme .tab:hover {
+    background-color: #555;
+}
+
+.dark-theme .tab.active {
+    background-color: #007bff;
+}
+
+.dark-theme .tab-content {
+    background-color: #333;
+    border-color: #555;
+}
+
+.dark-theme td {
+    border-color: #555;
+}
+
+.dark-theme td:hover {
+    background-color: #444;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .js-tasks-container {
+        width: 95%;
+        margin: 10px auto;
+    }
+
+    .tabs {
+        flex-direction: column;
+    }
+
+    .tab {
+        border-radius: 4px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    td {
+        padding: 15px;
+    }
+}
+
+/* Стили для инпутов и кнопок */
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.button-group button {
+    flex: 1;
+    min-width: 150px;
+}

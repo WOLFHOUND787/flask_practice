@@ -143,6 +143,10 @@ def quiz():
     
     return render_template('quiz.html')
 
+@app.route("/js_task")
+def js_tasks():
+    return render_template('js_task.html')
+
 # Обработка ошибки 404
 @app.errorhandler(404)
 def page_not_found(e):

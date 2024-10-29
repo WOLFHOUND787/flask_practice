@@ -1,0 +1,122 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="js-tasks-container">
+    <!-- Task 1 -->
+    <div id="text-element">Старый текст</div>
+    <div class="old-element">Этот элемент будет удален</div>
+    <p id="changeable-paragraph">Это изменяемый абзац.</p>
+
+    <!-- Task 2 -->
+    <div id="class-demo" class="initial-class second-class">Элемент с классами</div>
+    <p id="class-list"></p>
+    <button onclick="toggleClass()">Toggle Active Class</button>
+
+    <!-- Task 3 -->
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab(0)">Tab 1</div>
+        <div class="tab" onclick="switchTab(1)">Tab 2</div>
+        <div class="tab" onclick="switchTab(2)">Tab 3</div>
+    </div>
+    <div class="tab-content active">Содержимое таба 1</div>
+    <div class="tab-content">Содержимое таба 2</div>
+    <div class="tab-content">Содержимое таба 3</div>
+
+    <!-- Task 4 -->
+    <div>
+        <div class="input-group">
+            <input type="number" id="rows" placeholder="Строки">
+            <input type="number" id="cols" placeholder="Столбцы">
+        </div>
+        <div class="button-group">
+            <button onclick="createTable()">Создать таблицу</button>
+            <button onclick="countColoredCells()">Подсчитать ячейки</button>
+        </div>
+    </div>
+    <div id="table-container"></div>
+    <p id="colored-cells-count"></p>
+
+    <!-- Task 5 -->
+    <button onclick="toggleTheme()">Переключить тему</button>
+
+    <script>
+        // Task 1
+        document.getElementById('text-element').textContent = "Привет, мир!";
+        
+        const newDiv = document.createElement('div');
+        newDiv.className = 'new-div';
+        newDiv.textContent = 'Я новый элемент';
+        document.body.appendChild(newDiv);
+        
+        const oldElement = document.querySelector('.old-element');
+        if (oldElement) oldElement.remove();
+        
+        document.getElementById('changeable-paragraph').addEventListener('click', function(e) {
+            e.target.style.color = '#' + Math.floor(Math.random()*16777215).toString(16);
+            e.target.style.fontSize = (16 + Math.random() * 20) + 'px';
+        });
+
+        // Task 2
+        function toggleClass() {
+            const element = document.getElementById('class-demo');
+            element.classList.toggle('active');
+            updateClassList();
+        }
+
+        function updateClassList() {
+            const element = document.getElementById('class-demo');
+            const classList = Array.from(element.classList);
+            console.log(classList);
+            document.getElementById('class-list').textContent = 'Классы: ' + classList.join(', ');
+        }
+
+        // Task 3
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            tabs[index].classList.add('active');
+            contents[index].classList.add('active');
+        }
+
+        // Task 4
+        function createTable() {
+            const rows = document.getElementById('rows').value;
+            const cols = document.getElementById('cols').value;
+            let table = '<table>';
+            
+            for(let i = 0; i < rows; i++) {
+                table += '<tr>';
+                for(let j = 0; j < cols; j++) {
+                    table += '<td onclick="changeColor(this)"></td>';
+                }
+                table += '</tr>';
+            }
+            table += '</table>';
+            
+            document.getElementById('table-container').innerHTML = table;
+        }
+
+        function changeColor(cell) {
+            cell.style.backgroundColor = cell.style.backgroundColor ? '' : 'blue';
+        }
+
+        function countColoredCells() {
+            const coloredCells = document.querySelectorAll('td[style*="background-color"]').length;
+            document.getElementById('colored-cells-count').textContent = 
+                `Окрашенных ячеек: ${coloredCells}`;
+        }
+
+        // Task 5
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+        // Инициализация
+        updateClassList();
+    </script>
+</div>
+{% endblock %}
