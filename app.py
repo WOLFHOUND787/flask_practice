@@ -27,18 +27,20 @@ with app.app_context():
 def main():
     return render_template('main.html')
 
-@app.route("/news", methods=['GET', 'POST'])
+@app.route('/news', methods=['GET', 'POST'])
 def news():
     if request.method == 'POST':
-        title = request.form.get('title')
-        description = request.form.get('description')
-        tags = request.form.get('tags')
+        title = request.form['title']
+        description = request.form['description']
+        tags = request.form['tags']
+        # Получаем дату из формы, если она указана
+        date = datetime.strptime(request.form['date'], '%Y-%m-%dT%H:%M') if request.form['date'] else datetime.utcnow()
         
-        news = News(title=title, description=description, tags=tags)
+        news = News(title=title, description=description, tags=tags, date=date)
         db.session.add(news)
         db.session.commit()
-        return redirect(url_for('news'))
-        
+        return redirect('/news')
+    
     news_list = News.query.order_by(News.date.desc()).all()
     return render_template('news.html', news_list=news_list)
 
@@ -54,6 +56,9 @@ def news_detail(id):
             news.title = request.form.get('title', news.title)
             news.description = request.form.get('description', news.description)
             news.tags = request.form.get('tags', news.tags)
+            date = request.form.get('date')
+            if date:
+                news.date = datetime.strptime(date, '%Y-%m-%dT%H:%M')
             db.session.commit()
             return redirect(url_for('news_detail', id=id))
             
