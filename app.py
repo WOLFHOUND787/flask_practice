@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -12,6 +13,13 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
 
+class News(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+    tags = db.Column(db.String(200))
+
 with app.app_context():
     db.create_all()
 
@@ -19,14 +27,42 @@ with app.app_context():
 def main():
     return render_template('main.html')
 
-@app.route("/news")
+@app.route("/news", methods=['GET', 'POST'])
 def news():
-    news_list = [
-        {"title": "Новость 1", "content": "Это содержание первой новости."},
-        {"title": "Новость 2", "content": "Это содержание второй новости."},
-        {"title": "Новость 3", "content": "Это содержание третьей новости."},
-    ]
+    if request.method == 'POST':
+        title = request.form.get('title')
+        description = request.form.get('description')
+        tags = request.form.get('tags')
+        
+        news = News(title=title, description=description, tags=tags)
+        db.session.add(news)
+        db.session.commit()
+        return redirect(url_for('news'))
+        
+    news_list = News.query.order_by(News.date.desc()).all()
     return render_template('news.html', news_list=news_list)
+
+@app.route("/news/<int:id>", methods=['GET', 'POST'])
+def news_detail(id):
+    news = News.query.get_or_404(id)
+    
+    if request.method == 'GET':
+        return render_template('news_detail.html', news=news)
+        
+    elif request.method == 'POST':
+        if request.form.get('_method') == 'PUT':
+            news.title = request.form.get('title', news.title)
+            news.description = request.form.get('description', news.description)
+            news.tags = request.form.get('tags', news.tags)
+            db.session.commit()
+            return redirect(url_for('news_detail', id=id))
+            
+        elif request.form.get('_method') == 'DELETE':
+            db.session.delete(news)
+            db.session.commit()
+            return redirect(url_for('news'))
+            
+    return redirect(url_for('news'))
 
 @app.route("/about_us")
 def about_us():

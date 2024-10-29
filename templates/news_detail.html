@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+
+{% block content %}
+<h1 class="h1_main">{{ news.title }}</h1>
+<p class="p_main">{{ news.description }}</p>
+<p class="p_main">Дата публикации: {{ news.date.strftime('%Y-%m-%d %H:%M') }}</p>
+<p class="p_main">Теги: {{ news.tags }}</p>
+
+<form method="POST" action="{{ url_for('news_detail', id=news.id) }}">
+    <input type="hidden" name="_method" value="PUT">
+    <input type="text" name="title" value="{{ news.title }}" required>
+    <textarea name="description" required>{{ news.description }}</textarea>
+    <input type="text" name="tags" value="{{ news.tags }}">
+    <button type="submit">Обновить новость</button>
+</form>
+
+<form method="POST" action="{{ url_for('news_detail', id=news.id) }}">
+    <input type="hidden" name="_method" value="DELETE">
+    <button type="submit">Удалить новость</button>
+</form>
+
+<a href="{{ url_for('news') }}">Вернуться к списку новостей</a>
+{% endblock %}

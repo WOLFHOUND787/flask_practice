@@ -2,14 +2,28 @@
 
 {% block content %}
 <h1 class="h1_main">Новости</h1>
-<ul>
+
+<form method="POST" action="{{ url_for('news') }}">
+    <input type="text" name="title" placeholder="Заголовок" required>
+    <textarea name="description" placeholder="Описание" required></textarea>
+    <input type="text" name="tags" placeholder="Теги">
+    <button type="submit">Добавить новость</button>
+</form>
+
+{% if news_list %}
+    <ul>
     {% for news in news_list %}
         <li>
-            <h2 class="h2_main">{{ news.title }}</h2>
-            <p class="p_main">{{ news.content }}</p>
+            <a href="{{ url_for('news_detail', id=news.id) }}">
+                <h2 class="h2_main">{{ news.title }}</h2>
+            </a>
+            <p class="p_main">{{ news.description }}</p> 
+            <p class="p_main">Дата: {{ news.date.strftime('%Y-%m-%d %H:%M') }}</p>
+            <p class="p_main">Теги: {{ news.tags }}</p>
         </li>
-    {% else %}
-        <p class="p_main">Пока новостей нет.</p>
     {% endfor %}
-</ul>
+    </ul>
+{% else %}
+    <p class="p_main">Пока новостей нет.</p>
+{% endif %}
 {% endblock %}

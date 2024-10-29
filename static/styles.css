@@ -45,7 +45,7 @@ footer {
     color: green;
 }
 
-/* array_operations */
+/* Общие стили */
 h2 {
     color: #333;
     text-align: center;
@@ -57,10 +57,17 @@ h3 {
     text-align: center;
 }
 
+/* Формы */
 form {
     display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 label {
@@ -68,29 +75,56 @@ label {
     font-size: 16px;
 }
 
-input[type="text"] {
-    padding: 8px;
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 16px;
-    width: 60%;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
 }
 
 button {
-    padding: 8px 15px;
-    margin-left: 10px;
+    padding: 10px 20px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
+button[type="submit"] {
+    background-color: #28a745;
+}
+
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* array_operations */
 pre {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
@@ -99,7 +133,6 @@ pre {
     font-size: 14px;
     white-space: pre-wrap;
     word-wrap: break-word;
-    
 }
 
 button[type="button"] {
@@ -114,7 +147,6 @@ button[type="button"]:hover {
 }
 
 /* quiz */
-
 .quiz-container {
     max-width: 600px;
     margin: 0 auto;
@@ -192,4 +224,146 @@ button[type="button"]:hover {
 
 .quiz-result a:hover {
     background-color: #218838;
+}
+
+/* Стили для новостей */
+.news-list {
+    list-style: none;
+    padding: 0;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.news-item {
+    background-color: white;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.news-item:hover {
+    transform: translateY(-3px);
+}
+
+.news-title {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-decoration: none;
+}
+
+.news-title:hover {
+    color: #007bff;
+}
+
+.news-description {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.news-meta {
+    color: #888;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.news-tags {
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 14px;
+}
+
+.news-detail {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.news-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.delete-button {
+    background-color: #dc3545;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* Дополнительные стили для новостей */
+.news-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.news-form {
+    margin-bottom: 40px;
+}
+
+.no-news {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .content {
+        width: 90%;
+    }
+
+    .news-container {
+        width: 95%;
+    }
+
+    .news-item {
+        padding: 15px;
+    }
+
+    .news-title {
+        font-size: 20px;
+    }
+
+    .news-meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .news-tags {
+        margin-top: 5px;
+    }
+
+    .news-actions {
+        flex-direction: column;
+    }
+
+    .delete-button,
+    .back-link {
+        width: 100%;
+        text-align: center;
+    }
 }
