@@ -1,3 +1,4 @@
+/* Основные стили страницы */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -5,11 +6,18 @@ body {
     padding: 0;
 }
 
-header {
+header, footer {
     background-color: #333;
     color: white;
     padding: 1em;
     text-align: center;
+}
+
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 1000;
 }
 
 nav a {
@@ -18,374 +26,52 @@ nav a {
     margin: 0 1em;
 }
 
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 1em;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-}
-
-.content {
-    width: 300px;
-    margin: 0 auto;
-    text-align: center;
-    padding-bottom: 100px;
-}
-
-.h1_main {
-    text-decoration: solid;
-}
-
-.h2_main {
-    color: green;
-}
-
-/* Общие стили */
-h2 {
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-h3 {
-    color: #444;
-    text-align: center;
-}
-
-/* Формы */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-label {
-    margin-right: 10px;
-    font-size: 16px;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"],
-textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-textarea:focus {
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-}
-
-textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-button[type="submit"] {
-    background-color: #28a745;
-}
-
-button[type="submit"]:hover {
-    background-color: #218838;
-}
-
-/* array_operations */
-pre {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 15px;
-    font-size: 14px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-
-button[type="button"] {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    background-color: #28a745;
-}
-
-button[type="button"]:hover {
-    background-color: #218838;
-}
-
-/* quiz */
-.quiz-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-}
-
-.quiz-container h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.quiz-question {
-    margin-bottom: 20px;
-    font-size: 18px;
-    color: #444;
-}
-
-.quiz-question p {
-    margin-bottom: 10px;
-}
-
-.quiz-question label {
-    display: block;
-    margin-bottom: 5px;
-    cursor: pointer;
-}
-
-.quiz-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
-}
-
-.quiz-button:hover {
-    background-color: #0056b3;
-}
-
-.quiz-button:active {
-    background-color: #003f7f;
-}
-
-/* Стили для результата */
-.quiz-result {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.quiz-result p {
-    font-size: 20px;
-    color: #555;
-}
-
-.quiz-result a {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.quiz-result a:hover {
-    background-color: #218838;
-}
-
-/* Стили для новостей */
-.news-list {
-    list-style: none;
-    padding: 0;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.news-item {
-    background-color: white;
-    margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.news-item:hover {
-    transform: translateY(-3px);
-}
-
-.news-title {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 10px;
-    text-decoration: none;
-}
-
-.news-title:hover {
-    color: #007bff;
-}
-
-.news-description {
-    color: #666;
-    margin-bottom: 15px;
-    line-height: 1.6;
-}
-
-.news-meta {
-    color: #888;
-    font-size: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.news-tags {
-    background-color: #f0f0f0;
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 14px;
-}
-
-.news-detail {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.news-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.delete-button {
-    background-color: #dc3545;
-}
-
-.delete-button:hover {
-    background-color: #c82333;
-}
-
-.back-link {
-    display: inline-block;
-    margin-top: 20px;
-    color: #007bff;
-    text-decoration: none;
-}
-
-.back-link:hover {
-    text-decoration: underline;
-}
-
-/* Дополнительные стили для новостей */
-.news-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.news-form {
-    margin-bottom: 40px;
-}
-
-.no-news {
-    text-align: center;
-    color: #666;
-    font-style: italic;
-}
-
-/* Адаптивность для мобильных устройств */
-@media (max-width: 768px) {
-    .content {
-        width: 90%;
-    }
-
-    .news-container {
-        width: 95%;
-    }
-
-    .news-item {
-        padding: 15px;
-    }
-
-    .news-title {
-        font-size: 20px;
-    }
-
-    .news-meta {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .news-tags {
-        margin-top: 5px;
-    }
-
-    .news-actions {
-        flex-direction: column;
-    }
-
-    .delete-button,
-    .back-link {
-        width: 100%;
-        text-align: center;
-    }
-}
-
-
-/* Основные стили страницы */
+/* Контейнер задач */
 .js-tasks-container {
     max-width: 800px;
-    margin: 20px auto;
+    margin: 0 auto;
     padding: 20px;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Стили для Task 1 */
+/* Табы */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.tab.active, .tab:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Контент табов */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Task 1 */
 #text-element, #changeable-paragraph {
     padding: 15px;
     margin: 10px 0;
     background-color: #f9f9f9;
     border-radius: 4px;
-    transition: all 0.3s ease;
     cursor: pointer;
 }
 
@@ -393,7 +79,7 @@ button[type="button"]:hover {
     background-color: #f0f0f0;
 }
 
-/* Стили для Task 2 */
+/* Task 2 */
 #class-demo {
     padding: 15px;
     margin: 15px 0;
@@ -401,61 +87,27 @@ button[type="button"]:hover {
     border-radius: 4px;
 }
 
-#class-demo.active {
-    background-color: #007bff;
-    color: white;
-}
-
 #class-list {
     color: #666;
     font-style: italic;
 }
 
-/* Стили для Task 3 - вкладки */
-.tabs {
+/* Task 4 */
+.input-group, .button-group {
     display: flex;
-    gap: 5px;
-    margin-bottom: 20px;
-}
-
-.tab {
-    padding: 10px 20px;
-    background-color: #f0f0f0;
-    border-radius: 4px 4px 0 0;
-    border: 1px solid #ddd;
-    border-bottom: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.tab:hover {
-    background-color: #e0e0e0;
-}
-
-.tab.active {
-    background-color: #007bff;
-    color: white;
-    border-color: #007bff;
-}
-
-.tab-content {
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 0 4px 4px 4px;
-    margin-top: -1px;
-}
-
-/* Стили для Task 4 - таблица */
-#table-container {
-    margin: 20px 0;
-    overflow-x: auto;
+    gap: 10px;
+    margin: 15px 0;
 }
 
 table {
     margin: 0 auto;
+    border-collapse: collapse;
+    width: 100%;
 }
 
 td {
+    border: 1px solid #ddd;
+    padding: 10px;
     transition: background-color 0.3s ease;
 }
 
@@ -470,47 +122,39 @@ td:hover {
     margin-top: 10px;
 }
 
-/* Стили для Task 5 - темная тема */
+/* Task 5 - Темная тема */
 body.dark-theme {
     background-color: #222;
     color: #fff;
 }
 
-.dark-theme .js-tasks-container {
+.dark-theme .js-tasks-container, .dark-theme .tab-content {
     background-color: #333;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    border-color: #555;
 }
 
 .dark-theme .tab {
     background-color: #444;
     border-color: #555;
-    color: #fff;
+    color: white;
 }
 
-.dark-theme .tab:hover {
-    background-color: #555;
-}
-
-.dark-theme .tab.active {
+.dark-theme .tab.active, .dark-theme .tab:hover {
     background-color: #007bff;
-}
-
-.dark-theme .tab-content {
-    background-color: #333;
-    border-color: #555;
 }
 
 .dark-theme td {
     border-color: #555;
 }
 
-.dark-theme td:hover {
+.dark-theme input {
     background-color: #444;
+    color: white;
 }
 
 /* Адаптивность */
 @media (max-width: 768px) {
-    .js-tasks-container {
+    .js-tasks-container, .content {
         width: 95%;
         margin: 10px auto;
     }
@@ -520,41 +164,7 @@ body.dark-theme {
     }
 
     .tab {
-        border-radius: 4px;
-        border-bottom: 1px solid #ddd;
-    }
-
-    table {
         width: 100%;
+        text-align: center;
     }
-
-    td {
-        padding: 15px;
-    }
-}
-
-/* Стили для инпутов и кнопок */
-.input-group {
-    display: flex;
-    gap: 10px;
-    margin: 15px 0;
-}
-
-.input-group input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.button-group {
-    display: flex;
-    gap: 10px;
-    margin: 15px 0;
-    flex-wrap: wrap;
-}
-
-.button-group button {
-    flex: 1;
-    min-width: 150px;
 }
