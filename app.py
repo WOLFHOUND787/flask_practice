@@ -1,6 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify, Response
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import requests
+import os
+import json
+from google.cloud import translate_v2 as translate
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -151,6 +156,41 @@ def js_tasks():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+@app.route("/jokes_page")
+def jokes_page():
+    return render_template('joke.html')
+
+
+@app.route("/api/joke")
+def get_translated_joke():
+    # Получение шутки из внешнего API
+    joke_api_url = "https://official-joke-api.appspot.com/random_joke"
+    response = requests.get(joke_api_url)
+    
+    if response.status_code != 200:
+        return jsonify({"joke": "Не удалось получить шутку, попробуйте позже."})
+    
+    joke_data = response.json()
+    original_joke = f"{joke_data['setup']} - {joke_data['punchline']}"
+    
+    # Перевод шутки с использованием DeepL API
+    deepl_api_url = "https://api-free.deepl.com/v2/translate"
+    params = {
+        "auth_key": "38eec07f-176a-49ea-bbb3-e1c5d80cc9be:fx",
+        "text": original_joke,
+        "target_lang": "RU"
+    }
+    
+    translation_response = requests.post(deepl_api_url, data=params)
+    
+    if translation_response.status_code == 200:
+        translated_joke = translation_response.json()["translations"][0]["text"]
+    else:
+        translated_joke = f"Ошибка перевода: {translation_response.status_code} {translation_response.reason}"
+    
+    return Response(json.dumps({"joke": translated_joke}, ensure_ascii=False), content_type='application/json')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

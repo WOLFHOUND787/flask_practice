@@ -1,0 +1,18 @@
+{% extends "main.html" %}
+
+{% block content %}
+    <h1>Случайная шутка</h1>
+    <button id="getJokeBtn">Получить шутку</button>
+    <p id="jokeDisplay" style="white-space: pre-line;"></p>
+
+    <script>
+        document.getElementById('getJokeBtn').addEventListener('click', function() {
+            fetch('/api/joke')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('jokeDisplay').innerHTML = data.joke;
+                })
+                .catch(error => console.error('Ошибка:', error));
+        });
+    </script>
+{% endblock %}
