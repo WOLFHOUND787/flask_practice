@@ -1,0 +1,8 @@
+{% extends "main.html" %}
+{% block content %}
+
+    <h1>{{ currency }}</h1>
+    <p class="price">Текущая цена: ${{ price_usd }}</p>
+    <a href="{{ url_for('cryptos_prices') }}">Вернуться к списку криптовалют</a>
+
+{% endblock %}

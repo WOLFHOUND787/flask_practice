@@ -1,0 +1,35 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+    <h1>Текущие цены криптовалют</h1>
+    
+
+    <form method="post" action="{{ url_for('cryptos_prices') }}">
+        <input type="text" name="search_currency" placeholder="Введите символ криптовалюты (например, BTC)" required>
+        <input type="submit" value="Поиск">
+    </form>
+
+    <table>
+        <tr>
+            <th>Символ</th>
+            <th>Название</th>
+            <th>Цена (USD)</th>
+            <th>Детали</th>
+        </tr>
+        {% for crypto in crypto_data %}
+            <tr>
+                <td>{{ crypto.symbol }}</td>
+                {% if crypto.price_usd %}
+                    <td>{{ crypto.name }}</td>
+                    <td>${{ crypto.price_usd }}</td>
+                    <td><a href="{{ url_for('get_crypto_page', currency=crypto.symbol) }}">Подробнее</a></td>
+                {% else %}
+                    <td colspan="2" class="error">Ошибка: {{ crypto.error }}</td>
+                    <td></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

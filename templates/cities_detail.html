@@ -1,0 +1,21 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<h1>{{ weather.city }}</h1>
+
+<div class="weather-details">
+    <p><strong>Температура:</strong> {{ weather.temperature }} °C</p>
+    <p><strong>Ощущается как:</strong> {{ weather.feels_like }} °C</p>
+    <p><strong>Влажность:</strong> {{ weather.humidity }}%</p>
+    <p><strong>Давление:</strong> {{ weather.pressure }} гПа</p>
+    <p><strong>Скорость ветра:</strong> {{ weather.wind_speed }} м/с</p>
+    <p><strong>Описание:</strong> {{ weather.description }}</p>
+    {% if weather.icon %}
+        <img src="http://openweathermap.org/img/wn/{{ weather.icon }}@2x.png" alt="Icon">
+    {% endif %}
+</div>
+
+<a href="{{ url_for('cities_weather') }}">Вернуться к списку городов</a>
+
+{% endblock %}

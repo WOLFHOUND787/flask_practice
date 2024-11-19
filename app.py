@@ -12,6 +12,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+
+
+OPENWEATHERMAP_API_KEY = 'bf8a757f0ee33aafb55adbcda8b8944e'
+COINMARKETCAP_API_KEY = 'af9f6918-15fb-4c16-a4d0-52f2bdd11fb5'
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -190,6 +195,206 @@ def get_translated_joke():
         translated_joke = f"Ошибка перевода: {translation_response.status_code} {translation_response.reason}"
     
     return Response(json.dumps({"joke": translated_joke}, ensure_ascii=False), content_type='application/json')
+
+
+@app.route('/weather')
+def get_weather():
+    city = request.args.get('city')
+    if not city:
+        return jsonify({'error': 'Параметр "city" обязателен.'}), 400
+
+    url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={OPENWEATHERMAP_API_KEY}&units=metric&lang=ru'
+
+    try:
+        response = requests.get(url)
+        data = response.json()
+
+        if response.status_code != 200:
+            return jsonify({'error': data.get('message', 'Ошибка при получении данных.')}), response.status_code
+
+        weather_info = {
+            'city': data['name'],
+            'temperature': data['main']['temp'],
+            'description': data['weather'][0]['description']
+        }
+
+        return jsonify(weather_info)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/cities')
+def cities_weather():
+    search_city = request.args.get('search_city')
+    
+    if search_city:
+        # Перенаправляем на страницу подробной информации о городе
+        return redirect(url_for('city_detail', city_name=search_city))
+    
+    # Список городов по умолчанию
+    default_cities = ['Москва', 'Лондон', 'Нью-Йорк', 'Токио', 'Астана']
+    
+    weather_data = []
+    
+    for city in default_cities:
+        url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={OPENWEATHERMAP_API_KEY}&units=metric&lang=ru'
+        try:
+            response = requests.get(url)
+            data = response.json()
+
+            if response.status_code == 200:
+                weather = {
+                    'city': data['name'],
+                    'temperature': data['main']['temp'],
+                    'description': data['weather'][0]['description']
+                }
+                weather_data.append(weather)
+            else:
+                weather_data.append({'city': city, 'error': data.get('message', 'Ошибка')})
+        except Exception as e:
+            weather_data.append({'city': city, 'error': str(e)})
+    
+    return render_template('cities.html', weather_data=weather_data)
+
+
+
+@app.route('/crypto')
+def get_crypto():
+    currency = request.args.get('currency')
+    if not currency:
+        return jsonify({'error': 'Параметр "currency" обязателен.'}), 400
+
+    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
+    headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': COINMARKETCAP_API_KEY,
+    }
+    parameters = {
+        'symbol': currency.upper(),
+        'convert': 'USD'
+    }
+
+    try:
+        response = requests.get(url, headers=headers, params=parameters)
+        data = response.json()
+
+        if response.status_code != 200:
+            return jsonify({'error': data.get('status', {}).get('error_message', 'Ошибка при получении данных.')}), response.status_code
+
+        if 'data' not in data or currency.upper() not in data['data']:
+            return jsonify({'error': 'Криптовалюта не найдена.'}), 404
+
+        crypto_info = data['data'][currency.upper()]
+        price = crypto_info['quote']['USD']['price']
+
+        return jsonify({
+            'currency': crypto_info['name'],
+            'price_usd': price
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/cryptos', methods=['GET', 'POST'])
+def cryptos_prices():
+    if request.method == 'POST':
+    
+        search_currency = request.form.get('search_currency')
+        if search_currency:
+            return redirect(url_for('get_crypto_page', currency=search_currency))
+    
+
+    symbols = ['BTC', 'ETH', 'XRP', 'LTC', 'BCH']
+    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
+    headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': COINMARKETCAP_API_KEY,
+    }
+    parameters = {
+        'symbol': ','.join(symbols),
+        'convert': 'USD'
+    }
+    crypto_data = []
+
+    try:
+        response = requests.get(url, headers=headers, params=parameters)
+        data = response.json()
+
+        if response.status_code != 200:
+            return jsonify({'error': data.get('status', {}).get('error_message', 'Ошибка при получении данных.')}), response.status_code
+
+        for symbol in symbols:
+            if symbol in data['data']:
+                crypto = data['data'][symbol]
+                crypto_info = {
+                    'symbol': crypto['symbol'],
+                    'name': crypto['name'],
+                    'price_usd': round(crypto['quote']['USD']['price'], 2)
+                }
+                crypto_data.append(crypto_info)
+            else:
+                crypto_data.append({'symbol': symbol, 'error': 'Не найдено'})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+    return render_template('cryptos.html', crypto_data=crypto_data)
+
+
+@app.route('/cities/<city_name>')
+def city_detail(city_name):
+    url = f'https://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={OPENWEATHERMAP_API_KEY}&units=metric&lang=ru'
+    
+    try:
+        response = requests.get(url)
+        data = response.json()
+
+        # if response.status_code != 200:
+        #     return render_template('city_error.html', error=data.get('message', 'Ошибка при получении данных.')), response.status_code
+
+        weather_info = {
+            'city': data['name'],
+            'temperature': data['main']['temp'],
+            'feels_like': data['main']['feels_like'],
+            'humidity': data['main']['humidity'],
+            'pressure': data['main']['pressure'],
+            'wind_speed': data['wind']['speed'],
+            'description': data['weather'][0]['description'],
+            'icon': data['weather'][0]['icon']
+        }
+
+        return render_template('cities_detail.html', weather=weather_info)
+    except Exception as e:
+        return render_template('city_error.html', error=str(e)), 500
+
+
+
+@app.route('/crypto_page/<currency>')
+def get_crypto_page(currency):
+    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
+    headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': COINMARKETCAP_API_KEY,
+    }
+    parameters = {
+        'symbol': currency.upper(),
+        'convert': 'USD'
+    }
+
+    try:
+        response = requests.get(url, headers=headers, params=parameters)
+        data = response.json()
+
+        if response.status_code != 200:
+            return render_template('crypto_error.html', error=data.get('status', {}).get('error_message', 'Ошибка при получении данных.')), response.status_code
+
+        if 'data' not in data or currency.upper() not in data['data']:
+            return render_template('crypto_error.html', error='Криптовалюта не найдена.'), 404
+
+        crypto_info = data['data'][currency.upper()]
+        price = round(crypto_info['quote']['USD']['price'], 2)
+
+        return render_template('crypto_detail.html', currency=crypto_info['name'], price_usd=price)
+    except Exception as e:
+        return render_template('crypto_error.html', error=str(e)), 500
 
 
 if __name__ == '__main__':
